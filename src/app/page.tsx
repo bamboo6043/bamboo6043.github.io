@@ -218,13 +218,15 @@ export default function HomePage() {
 
                         <div className="events__cta">
                             <a
-                                href="https://forms.gle/Nmjbn9a1hGTNUnVN9/ // TODO: inlocuieste cu linkul real de Google Forms
+                                href="https://forms.gle/Nmjbn9a1hGTNUnVN9"
+                                // TODO: daca se schimba formularul, inlocuieste linkul de mai sus
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="btn-primary"
                             >
                                 Inscrie-te la ateliere
                             </a>
+
                             <p className="events__cta-note">
                                 Dupa completarea formularului vei primi pe email detaliile de
                                 participare si link-ul de conectare.
