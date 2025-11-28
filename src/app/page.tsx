@@ -218,7 +218,7 @@ export default function HomePage() {
 
                         <div className="events__cta">
                             <a
-                                href="https://forms.gle/EXEMPLU" // TODO: inlocuieste cu linkul real de Google Forms
+                                href="https://forms.gle/Nmjbn9a1hGTNUnVN9/ // TODO: inlocuieste cu linkul real de Google Forms
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="btn-primary"
