@@ -1,26 +1,494 @@
-@import "tailwindcss";
+/* ---------------------------
+   1. Reset & variabile
+---------------------------- */
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+}
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+    --color-bg: #f5f5f4;
+    --color-surface: #ffffff;
+    --color-surface-soft: #f9fafb;
+    --color-primary: #157b7f; /* teal calm */
+    --color-primary-soft: #e0f4f5;
+    --color-text: #111827;
+    --color-text-muted: #6b7280;
+    --color-border: #e5e7eb;
+    --shadow-soft: 0 18px 45px rgba(15, 23, 42, 0.07);
+    --radius-lg: 18px;
+    --radius-pill: 999px;
+    --max-width: 1040px;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
+/* Fonturile vin din next/font în layout.tsx */
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+    font-family: var(--font-body), system-ui, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", sans-serif;
+    background: radial-gradient(circle at top, #e5e7eb 0, #f9fafb 45%, #f5f5f4 100%);
+    color: var(--color-text);
+    line-height: 1.7;
+}
+
+/* ---------------------------
+   2. Layout general
+---------------------------- */
+
+.container {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 0 1.25rem;
+}
+
+.site-header {
+    position: sticky;
+    top: 0;
+    z-index: 40;
+    backdrop-filter: blur(14px);
+    background: rgba(249, 250, 251, 0.92);
+    border-bottom: 1px solid rgba(229, 231, 235, 0.9);
+}
+
+.site-header__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 76px;
+    gap: 1.5rem;
+}
+
+.logo a {
+    font-family: var(--font-heading), system-ui, serif;
+    font-size: 1.3rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-primary);
+    text-decoration: none;
+}
+
+/* Navigatie */
+
+.main-nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    font-size: 0.95rem;
+}
+
+.main-nav a {
+    position: relative;
+    padding: 0.4rem 0.9rem;
+    border-radius: var(--radius-pill);
+    text-decoration: none;
+    color: var(--color-text-muted);
+    transition: background-color 0.18s ease, color 0.18s ease,
+    transform 0.1s ease;
+}
+
+.main-nav a::after {
+    content: "";
+    position: absolute;
+    left: 0.9rem;
+    right: 0.9rem;
+    bottom: 0.18rem;
+    height: 2px;
+    border-radius: 999px;
+    background: var(--color-primary);
+    transform: scaleX(0);
+    transform-origin: center;
+    transition: transform 0.18s ease;
+    opacity: 0.2;
+}
+
+.main-nav a:hover {
+    background: var(--color-primary-soft);
+    color: var(--color-primary);
+    transform: translateY(-1px);
+}
+
+.main-nav a:hover::after {
+    transform: scaleX(1);
+}
+
+@media (max-width: 720px) {
+    .site-header__inner {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 0.75rem 0;
+    }
+
+    .main-nav {
+        justify-content: flex-start;
+    }
+}
+
+/* Main & card general */
+
+.site-main {
+    padding: 2.9rem 0 3.9rem;
+}
+
+.site-main > .container > * {
+    background: var(--color-surface);
+    border-radius: 26px;
+    padding: 2.7rem 2.6rem 2.9rem;
+    box-shadow: var(--shadow-soft);
+    border: 1px solid rgba(229, 231, 235, 0.9);
+}
+
+@media (max-width: 720px) {
+    .site-main > .container > * {
+        padding: 2rem 1.6rem 2.2rem;
+        border-radius: 18px;
+    }
+}
+
+/* ---------------------------
+   3. Tipografie
+---------------------------- */
+
+h1,
+h2,
+h3,
+h4 {
+    font-family: var(--font-heading), "Playfair Display", system-ui, serif;
+    font-weight: 600;
+    color: #0f172a;
+    margin-top: 0;
+}
+
+h1 {
+    font-size: 2.4rem;
+    line-height: 1.15;
+    margin-bottom: 1.4rem;
+}
+
+h2 {
+    font-size: 1.4rem;
+    margin-top: 2.1rem;
+    margin-bottom: 0.75rem;
+}
+
+h3 {
+    font-size: 1.1rem;
+    margin-top: 1.6rem;
+    margin-bottom: 0.5rem;
+}
+
+p {
+    margin: 0 0 0.9rem;
+    color: var(--color-text);
+}
+
+p + p {
+    margin-top: 0.28rem;
+}
+
+article {
+    max-width: 760px;
+}
+
+article > section {
+    margin-bottom: 1.8rem;
+}
+
+/* ---------------------------
+   4. Linkuri & butoane
+---------------------------- */
+
+a {
+    color: var(--color-primary);
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+.btn-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.65rem 1.6rem;
+    border-radius: var(--radius-pill);
+    background: var(--color-primary);
+    color: #ffffff;
+    font-weight: 500;
+    font-size: 0.98rem;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 12px 26px rgba(21, 123, 127, 0.35);
+    transform: translateY(0);
+    transition: transform 0.1s ease, box-shadow 0.1s ease, filter 0.1s ease;
+    white-space: nowrap;
+}
+
+.btn-primary:hover {
+    text-decoration: none;
+    filter: brightness(1.05);
+    transform: translateY(-1px);
+    box-shadow: 0 16px 32px rgba(21, 123, 127, 0.4);
+}
+
+.btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.55rem 1.3rem;
+    border-radius: var(--radius-pill);
+    border: 1px solid var(--color-border);
+    background: #f9fafb;
+    color: var(--color-text-muted);
+    font-size: 0.92rem;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.12s ease, color 0.12s ease,
+    border-color 0.12s ease;
+}
+
+.btn-secondary:hover {
+    background: #e5e7eb;
+    color: var(--color-text);
+    text-decoration: none;
+}
+
+.inline-link {
+    font-weight: 500;
+}
+
+/* ---------------------------
+   5. Homepage – hero
+---------------------------- */
+
+.page {
+    display: flex;
+    flex-direction: column;
+    gap: 2.4rem;
+}
+
+.hero {
+    display: grid;
+    grid-template-columns: minmax(0, 1.6fr) minmax(0, 1.2fr);
+    gap: 2.2rem;
+    align-items: center;
+}
+
+.hero__content {
+    max-width: 520px;
+}
+
+.hero__eyebrow {
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    font-size: 0.78rem;
+    color: var(--color-text-muted);
+    margin-bottom: 0.75rem;
+}
+
+.hero__title {
+    font-size: 2.6rem;
+}
+
+.hero__subtitle {
+    font-size: 0.98rem;
+    color: #4b5563;
+}
+
+.hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.85rem;
+    margin: 1.4rem 0 0.7rem;
+}
+
+.hero__note {
+    font-size: 0.9rem;
+    color: var(--color-text-muted);
+}
+
+.hero__photo {
+    position: relative;
+    display: flex;
+    justify-content: center;
+}
+
+.hero__portrait {
+    width: 100%;
+    height: auto;
+    max-width: 360px;
+    border-radius: 24px;
+    object-fit: cover;
+    box-shadow: 0 18px 45px rgba(15, 23, 42, 0.28);
+}
+
+.hero__badge {
+    position: absolute;
+    bottom: 1.4rem;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 0.45rem 0.9rem;
+    border-radius: var(--radius-pill);
+    background: rgba(249, 250, 251, 0.9);
+    border: 1px solid rgba(209, 213, 219, 0.85);
+    font-size: 0.8rem;
+    color: #374151;
+    backdrop-filter: blur(8px);
+}
+
+/* Responsive hero */
+
+@media (max-width: 900px) {
+    .hero {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .hero__photo {
+        order: -1;
+    }
+
+    .hero__content {
+        max-width: none;
+    }
+
+    .hero__title {
+        font-size: 2.2rem;
+    }
+}
+
+/* ---------------------------
+   6. Homepage – carduri info
+---------------------------- */
+
+.home-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.3rem;
+}
+
+.home-card {
+    border-radius: 18px;
+    padding: 1.4rem 1.5rem 1.5rem;
+    background: var(--color-surface-soft);
+    border: 1px solid var(--color-border);
+}
+
+.home-card h2 {
+    margin-top: 0;
+    font-size: 1.1rem;
+}
+
+.home-card p {
+    font-size: 0.95rem;
+}
+
+.home-card ul {
+    padding-left: 1.1rem;
+    margin: 0.5rem 0 0.8rem;
+}
+
+.home-card li {
+    margin-bottom: 0.3rem;
+    font-size: 0.94rem;
+}
+
+.home-card li::marker {
+    color: var(--color-primary);
+}
+
+.home-card--accent {
+    background: var(--color-primary-soft);
+    border-color: rgba(21, 123, 127, 0.25);
+}
+
+.home-card__cta {
+    margin-top: 0.5rem;
+}
+
+@media (max-width: 960px) {
+    .home-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (max-width: 720px) {
+    .home-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ---------------------------
+   7. Blockquote (referințe)
+---------------------------- */
+
+blockquote {
+    margin: 1.1rem 0;
+    padding: 0.95rem 1.1rem 1rem;
+    border-left: 4px solid var(--color-primary-soft);
+    background: #f9fafb;
+    border-radius: 14px;
+    font-style: italic;
+    color: var(--color-text);
+}
+
+blockquote footer {
+    margin-top: 0.65rem;
+    font-style: normal;
+    font-weight: 500;
+    color: var(--color-text-muted);
+}
+
+/* ---------------------------
+   8. Liste & text secundar
+---------------------------- */
+
+ul {
+    padding-left: 1.2rem;
+    margin: 0.6rem 0 1rem;
+}
+
+li {
+    margin-bottom: 0.35rem;
+}
+
+/* Email highlight */
+
+article a[href^="mailto:"] {
+    font-weight: 500;
+}
+
+/* ---------------------------
+   9. Footer
+---------------------------- */
+
+.site-footer {
+    border-top: 1px solid rgba(229, 231, 235, 0.9);
+    background: #f9fafb;
+    padding: 1.35rem 0 1.9rem;
+    font-size: 0.86rem;
+    color: var(--color-text-muted);
+}
+
+.site-footer .container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 0.5rem;
+}
+
+.site-footer a {
+    color: var(--color-text-muted);
+}
+
+.site-footer a:hover {
+    color: var(--color-primary);
 }
