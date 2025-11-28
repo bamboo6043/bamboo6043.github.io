@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Playfair_Display, Source_Sans_3 } from "next/font/google";
 import "./globals.css";
+import SiteHeader from "../components/SiteHeader";
 
 const headingFont = Playfair_Display({
     subsets: ["latin-ext"],
@@ -16,9 +17,9 @@ const bodyFont = Source_Sans_3({
 });
 
 export const metadata: Metadata = {
-    title: "Smart Steps – Dezvoltare personală & profesională",
+    title: "Smart Steps – Dezvoltare personala & profesionala",
     description:
-        "Consiliere în dezvoltare personală și profesională pentru lideri, manageri și profesioniști.",
+        "Consiliere in dezvoltare personala si profesionala pentru lideri, manageri si profesionisti.",
 };
 
 export default function RootLayout({
@@ -29,30 +30,19 @@ export default function RootLayout({
     return (
         <html lang="ro" className={`${headingFont.variable} ${bodyFont.variable}`}>
         <body>
-        <header className="site-header">
-            <div className="container site-header__inner">
-                <div className="logo">
-                    <Link href="/">Smart Steps</Link>
-                </div>
-                <nav className="main-nav" aria-label="Navigare principală">
-                    <Link href="/">Acasă</Link>
-                    <Link href="/despre-mine">Despre mine</Link>
-                    <Link href="/servicii">Servicii</Link>
-                    <Link href="/referinte">Referințe</Link>
-                    <Link href="/contact">Contact</Link>
-                </nav>
-            </div>
-        </header>
+        <SiteHeader />
 
         <main className="site-main">
-            <div className="container">{children}</div>
+            <div className="container">
+                <div className="page-wrapper">{children}</div>
+            </div>
         </main>
 
         <footer className="site-footer">
             <div className="container">
                 <p>Smart Steps © 2008 – {new Date().getFullYear()}</p>
                 <p>
-                    <Link href="/termeni-si-conditii">Termeni și condiții</Link>
+                    <Link href="/termeni-si-conditii">Termeni si conditii</Link>
                 </p>
             </div>
         </footer>

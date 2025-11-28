@@ -43,9 +43,9 @@ body {
 ---------------------------- */
 
 .container {
-    max-width: var(--max-width);
+    max-width: 1100px;
     margin: 0 auto;
-    padding: 0 1.25rem;
+    padding: 0 1.5rem;
 }
 
 .site-header {
@@ -63,6 +63,7 @@ body {
     justify-content: space-between;
     min-height: 76px;
     gap: 1.5rem;
+    position: relative; /* needed for absolute mobile menu */
 }
 
 .logo a {
@@ -75,7 +76,7 @@ body {
     text-decoration: none;
 }
 
-/* Navigatie */
+/* Navigatie desktop */
 
 .main-nav {
     display: flex;
@@ -119,17 +120,120 @@ body {
     transform: scaleX(1);
 }
 
+/* Burger button */
+
+.nav-toggle {
+    display: none; /* hidden on desktop */
+    border: none;
+    background: transparent;
+    padding: 0.25rem;
+    cursor: pointer;
+}
+
+.nav-toggle__icon {
+    display: block;
+    width: 1.6rem;
+    height: 1.6rem;
+    position: relative;
+}
+
+.nav-toggle__icon::before,
+.nav-toggle__icon::after,
+.nav-toggle__icon::marker {
+    /* this pseudo-marker trick might be weird, so instead use 2 bars + center bar via box-shadow */
+}
+
+/* Simple burger with 3 bars */
+.nav-toggle__icon::before,
+.nav-toggle__icon::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 2px;
+    border-radius: 999px;
+    background: #111827;
+    transition: transform 0.15s ease, opacity 0.15s ease, top 0.15s ease,
+    bottom 0.15s ease;
+}
+
+.nav-toggle__icon::before {
+    top: 0.4rem;
+    box-shadow: 0 6px 0 #111827; /* middle bar */
+}
+
+.nav-toggle__icon::after {
+    bottom: 0.4rem;
+}
+
+/* X state */
+.nav-toggle--open .nav-toggle__icon::before {
+    top: 0.8rem;
+    box-shadow: none;
+    transform: rotate(45deg);
+}
+
+.nav-toggle--open .nav-toggle__icon::after {
+    bottom: 0.8rem;
+    transform: rotate(-45deg);
+}
+
+/* Screen-reader only text */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* Mobile layout */
+
 @media (max-width: 720px) {
     .site-header__inner {
-        flex-direction: column;
-        align-items: flex-start;
-        padding: 0.75rem 0;
+        min-height: 64px;
+    }
+
+    .nav-toggle {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
     }
 
     .main-nav {
-        justify-content: flex-start;
+        position: absolute;
+        top: 100%;
+        right: 1.5rem;
+        left: 1.5rem;
+        margin-top: 0.4rem;
+        padding: 0.75rem 0.85rem 0.9rem;
+        border-radius: 16px;
+        background: rgba(249, 250, 251, 0.98);
+        border: 1px solid rgba(229, 231, 235, 0.95);
+        box-shadow: 0 18px 40px rgba(15, 23, 42, 0.18);
+        flex-direction: column;
+        gap: 0.25rem;
+        display: none; /* hidden by default on mobile */
+    }
+
+    .main-nav--open {
+        display: flex;
+    }
+
+    .main-nav a {
+        width: 100%;
+        padding: 0.4rem 0.6rem;
+    }
+
+    .main-nav a::after {
+        display: none; /* keep it simpler in the dropdown */
     }
 }
+
 
 /* Main & card general */
 
@@ -274,6 +378,22 @@ a:hover {
     display: flex;
     flex-direction: column;
     gap: 2.4rem;
+}
+
+.page-wrapper article {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+
+.page-wrapper {
+    background: #ffffff;
+    border-radius: 18px;
+    padding: 2.4rem 2.6rem;
+    box-shadow: 0 6px 22px rgba(0,0,0,0.05);
+    border: 1px solid rgba(0,0,0,0.05);
+    margin-top: 2.5rem;
+    margin-bottom: 3rem;
 }
 
 .hero {
@@ -491,4 +611,160 @@ article a[href^="mailto:"] {
 
 .site-footer a:hover {
     color: var(--color-primary);
+}
+
+.events {
+    margin-top: 2.4rem;
+    padding: 2.2rem 2.4rem 2.6rem;
+    border-radius: 20px;
+    background: #f9fafb;
+    border: 1px solid #e5e7eb;
+}
+
+.events__inner {
+    display: grid;
+    grid-template-columns: minmax(0, 1.4fr) minmax(0, 1.3fr);
+    gap: 1.8rem;
+}
+
+@media (max-width: 900px) {
+    .events__inner {
+        grid-template-columns: 1fr;
+    }
+}
+
+.events__eyebrow {
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    font-size: 0.75rem;
+    color: #9a3412;
+    margin-bottom: 0.4rem;
+}
+
+.events__title {
+    font-size: 1.6rem;
+    margin-bottom: 0.6rem;
+}
+
+.events__lead {
+    font-size: 0.98rem;
+    color: #374151;
+}
+
+.events__text {
+    font-size: 0.94rem;
+    color: #4b5563;
+    margin-top: 0.6rem;
+}
+
+.events__text--small {
+    font-size: 0.88rem;
+    color: #6b7280;
+}
+
+.events__box {
+    margin-top: 1.2rem;
+    padding: 1rem 1rem 1.1rem;
+    border-radius: 14px;
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    font-size: 0.9rem;
+}
+
+.events__box-title {
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.events__audience {
+    margin-top: 1.1rem;
+    font-size: 0.9rem;
+}
+
+.events__audience-title {
+    font-weight: 600;
+    margin-bottom: 0.4rem;
+}
+
+.events__audience ul,
+.events__box ul {
+    margin: 0;
+    padding-left: 1.1rem;
+}
+
+.events__cta {
+    margin-top: 1.3rem;
+}
+
+.events__cta-note {
+    margin-top: 0.4rem;
+    font-size: 0.8rem;
+    color: #6b7280;
+}
+
+/* right column list */
+
+.events__list-title {
+    font-size: 0.95rem;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: #6b7280;
+}
+
+.events__list-subtitle {
+    margin-top: 0.4rem;
+    font-size: 0.9rem;
+    color: #4b5563;
+}
+
+.events__items {
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+}
+
+.events__item {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    gap: 0.7rem;
+    align-items: center;
+    padding: 0.7rem 0.9rem;
+    border-radius: 12px;
+    background: #f9fafb;
+    border: 1px solid #e5e7eb;
+    font-size: 0.9rem;
+}
+
+.events__item-index {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: #9ca3af;
+}
+
+.events__item-title {
+    font-weight: 600;
+    color: #111827;
+}
+
+.events__item-subtitle {
+    font-size: 0.82rem;
+    color: #4b5563;
+}
+
+.events__item-date {
+    font-size: 0.8rem;
+    font-weight: 500;
+    padding: 0.25rem 0.7rem;
+    border-radius: 999px;
+    background: #fef3c7;
+    color: #92400e;
+}
+
+.events__footnote {
+    margin-top: 0.8rem;
+    font-size: 0.8rem;
+    color: #6b7280;
 }
