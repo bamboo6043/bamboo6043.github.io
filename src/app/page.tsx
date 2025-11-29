@@ -58,7 +58,7 @@ export default function HomePage() {
     return (
         <div className="page">
             {/* HERO */}
-            <section className="hero">
+            <section className="hero aligned-hero">
                 <div className="hero__content">
                     <p className="hero__eyebrow">
                         Consiliere in dezvoltare personala &amp; profesionala

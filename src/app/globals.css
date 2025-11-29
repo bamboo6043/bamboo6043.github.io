@@ -43,7 +43,7 @@ body {
 ---------------------------- */
 
 .container {
-    max-width: 1100px;
+    max-width: 1500px;
     margin: 0 auto;
     padding: 0 1.5rem;
 }
@@ -396,15 +396,16 @@ a:hover {
     margin-bottom: 3rem;
 }
 
-.hero {
+.aligned-hero {
     display: grid;
-    grid-template-columns: minmax(0, 1.6fr) minmax(0, 1.2fr);
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 2.2rem;
     align-items: center;
 }
 
-.hero__content {
-    max-width: 520px;
+/* Hero text spans the first 2 grid columns */
+.aligned-hero .hero__content {
+    grid-column: span 2;
 }
 
 .hero__eyebrow {
